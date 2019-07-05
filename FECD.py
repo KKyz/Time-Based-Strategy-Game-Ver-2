@@ -17,6 +17,7 @@ from Character import *
 pygame.init() # Initialising pygame so that we can use its functions
 pygame.font.init() # initialising pygame fonts so that we can use fonts in pygame
 pygame.joystick.init() # initialising pygame joystick so that we can use controllers in pygame
+pygame.mixer.init(frequency=22050, size=-16, channels=2, buffer=4096)
 Currently_Selected = 0 # Defining Currrently_Selected. Has different uses in this program. For now, it shows if we have selected a character or not. 0 Not selected, 1 is selected.
 pygame.key.set_repeat(2000, 9) # Uses a function from a previous file. This allows us to hold any button down but delay it enough that the player would fly through menus and the such. 
 Reticlex = 3 # initial Reticle X-coordinate position. It speaks for itself really
@@ -56,12 +57,12 @@ def DrawReticle(): # Definition for placing the reticle
 
 # This is a list of weapon and item descriptions. The descriptions require name, icon, menu category, damage, critical hit chance, special ability, defense, offsets, and the drain of the activity bar used by the weapon respectively
 # Weapon Descriptions
-Scrimitar = Menu("Scrimitar","A",[Weapon("Scrimitar", 5,0.3,"",5, 15, [[0, 1], [0, -1], [-1, 0], [1, 0],[1, 1],[1, -1],[-1, 1],[-1, -1]])])
+Scrimitar = Menu("Scrimitar","A",[Weapon("Scrimitar", 5,0.3,"",5, 15, ScrimitarClashSound, [[0, 1], [0, -1], [-1, 0], [1, 0],[1, 1],[1, -1],[-1, 1],[-1, -1]])])
 Thunder_Scroll = Menu("Thunder Scroll", "U",[AOEItem("Thunder Scroll", 3, [[0, 0]], [[-1, -3], [1, -3], [0, -2], [-1, -1], [1,-1], [0, 0], [-1, 1], [1, 1], [0, 2], [-1, 3], [1, 3]])])
 Fire_Scroll = Menu("Fire Scroll","U",[Weapon("Fire Scroll",7,0.1,"After-Effect",0, 1, [[1, 0], [2, 0], [0, 1], [0, 2], [0, -1], [0, -2]])])
-Dual_Masamune = Menu("Dual Masamune","N",[Weapon("Dual Masamune", 58,0.7,"",10, 1, [[1, 1], [-1, 1], [1, -1], [-1,-1]])])
-Nevan = Menu("Nevan","y",[Weapon("Nevan", 43,0.3,"",40, 1, [[1, 0], [-1, 0], [-2, 1], [2, 1], [-2, -1], [2, -1], [0, 1], [0, -1]])])
-Binding_Blade = Menu("Binding Blade","A",[Weapon("Binding Blade", 100,0.9,"",100, 1, [[-1, 0],[ 1, 0],[ 0, 1],[ 0,-1],[-2, 0],[ 2, 0],[ 0,-2],[ 0, 2],[-1, 1],[-1,-1],[ 1,-1],[ 1, 1]])])
+Dual_Masamune = Menu("Dual Masamune","N",[Weapon("Dual Masamune", 58,0.7,"",10, 1, DualMasamuneClashSound, [[1, 1], [-1, 1], [1, -1], [-1,-1]])])
+Nevan = Menu("Nevan","y",[Weapon("Nevan", 43,0.3,"",40, 1, NevanStrumSound, [[1, 0], [-1, 0], [-2, 1], [2, 1], [-2, -1], [2, -1], [0, 1], [0, -1]])])
+Binding_Blade = Menu("Binding Blade","A",[Weapon("Binding Blade", 100,0.9,"",100, 1, BindingBladeClashSound, [[-1, 0],[ 1, 0],[ 0, 1],[ 0,-1],[-2, 0],[ 2, 0],[ 0,-2],[ 0, 2],[-1, 1],[-1,-1],[ 1,-1],[ 1, 1]])])
 #Item Descriptions
 potion = Menu("potion","E",[Item("Potion", 5, [[-1, 0], [ 1, 0], [ 0, 1],[ 0,-1],[-2, 0],[ 2, 0],[ 0,-2],[ 0, 2],[-1, 1],[-1,-1],[ 1,-1],[ 1, 1]])])
 Hi_potion = Menu("Hi-potion", "E",[Item("Hi-potion", 3, [[-1, 0], [ 1, 0],[ 0, 1],[ 0,-1],[-2, 0],[ 2, 0],[ 0,-2],[ 0, 2],[-1, 1],[-1,-1],[ 1,-1],[ 1, 1]])])
@@ -265,6 +266,8 @@ while not quit: # you are either a 2 year old with an IQ of 8 or a game journali
 				Currently_Focused_Menu = Actions
 
 	if pressed[pygame.K_ESCAPE]:
+		pygame.mixer.Sound.play(QuitSound)
+		pygame.mixer.music.stop()
 		screen.blit(SaveText, (200,200))
 		pygame.display.flip()
 		pygame.time.wait(420)
@@ -398,8 +401,10 @@ while not quit: # you are either a 2 year old with an IQ of 8 or a game journali
 		PhaseFocus = 1
 		Currently_Selected.Phase = 3
 	if Currently_Selected != 0 and Currently_Selected.Phase == 3:
-		c.PauseActivity = c.Activity
-		c.Activity = c.PauseActivity
+		print("Weed")
+		for c in chars:
+			c.PauseActivity = c.Activity
+			c.Activity = c.PauseActivity
 
 	for c in chars:
 		if c.Activity == 0:

@@ -30,3 +30,11 @@ SaveText = pygame.image.load("Images/SaveText.png").convert()
 bLaCksCrEEn = pygame.image.load("Images/BlackScreen.jpg").convert()
 FountainOfYouthSprite = pygame.image.load("Images/Fountain of youth.png").convert_alpha()
 Actvivtygaugesprite = pygame.image.load("Images/Activity_Gauge.png").convert_alpha()
+
+#Sound Effects LOAD AREA
+QuitSound = pygame.mixer.Sound("SFX/QuitSound.wav")
+ScrimitarClashSound = pygame.mixer.Sound("SFX/Sword_Clash.wav")
+DualMasamuneClashSound = pygame.mixer.Sound("SFX/Masamune_Clash.wav")
+PotionUseSound = pygame.mixer.Sound("SFX/Potion_Use.wav")
+BindingBladeClashSound = pygame.mixer.Sound("SFX/BindingBlade_Clash.wav")
+NevanStrumSound = pygame.mixer.Sound("SFX/NevanStrumSound.wav")

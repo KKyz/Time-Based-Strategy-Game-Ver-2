@@ -1,6 +1,6 @@
-1. Once a weapon is selected from a list, it isn't used by the player, instantly defaulting the player's weapon as the default Fists
-2. Items do not have an offset and the game gives the 3 instead of 2 positional argument syntax error
-3. Currently_Selected doesn't have a .Activity attribute, therefore, individual activity bars cannot be assigned
-4. Character doesn't have a .Activity attribute, even though it clearly has
-5. Activity bars do not seem to move at all
+1. Weapon's critical stats must come from an index that is in a list (psuedo random numbers)
+2. Characters lack afterimages when they move
+3. Only the currently selected character's activity bar pauses when their phase is 3 isntead of everyone's pausing.
+5. All walls are passable while tiles like rivers shouldn't
 6. Selected Characters can go one square farther than the reticle
+7. Characters don't have animations

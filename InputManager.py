@@ -20,3 +20,4 @@ class InputHandler:
 
 IBO = InputHandler(210)
 IDO = InputHandler(125)
+

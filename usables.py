@@ -1,11 +1,6 @@
+import pygame
 import random
-from resources import FountainOfYouthSprite
-from resources import Selectable_Reticle
-from resources import Recoverable_Reticle
-from resources import HealthBar
-from resources import Smoke_Reticle
-from resources import Thunder_Reticle
-from resources import CharUnderFog
+from resources import FountainOfYouthSprite, Selectable_Reticle, Recoverable_Reticle, HealthBar, Smoke_Reticle, Thunder_Reticle, CharUnderFog, PotionUseSound, ScrimitarClashSound
 from Character import Character
 from utils import blit_alpha
 
@@ -24,7 +19,7 @@ class AOEItem:
 	def use(self, position):
 		self.amount -= 1
 		if self.amount >= 1:
-			newItem = AOEItem(self.name, self.offsets, self.effect_offsets)
+			newItem = AOEItem(self.name, self.amount, self.offsets, self.effect_offsets)
 			newItem.position = position
 			newItem.instance = True
 			return newItem
@@ -107,12 +102,16 @@ class Item:
 		# activitygauge = 0
 
 	def potion(self, target):
+		pygame.mixer.Sound.play(PotionUseSound)
+		pygame.mixer.music.stop()
 		target.HP += 10
 		if target.HP > target.MAXHP:
 			target.HP = target.MAXHP
 		print(self.name)
 
 	def hi_potion(self, target):
+		pygame.mixer.Sound.play(PotionUseSound)
+		pygame.mixer.music.stop()
 		target.HP += 30
 		if target.HP > target.MAXHP:
 			target.HP = target.MAXHP
@@ -125,22 +124,25 @@ class Item:
 
 class Weapon:
 	name="default"
-	def __init__(self, name="wood", Strength=10, Crit=0.01, Sp_Ability="none", Defense = 2, ActivityDrain = 10, offsets = [[-1,0], [1,0], [0,1], [0,-1]]):
+	def __init__(self, name="wood", Strength=10, Crit=0.01, Sp_Ability="none", Defense = 2, ActivityDrain = 10, SFX = ScrimitarClashSound, offsets = [[-1,0], [1,0], [0,1], [0,-1]]):
 		self.name = name
 		self.Strength = Strength
 		self.Crit = Crit
 		self.Sp_Ability = Sp_Ability
 		self.offsets = offsets
 		self.Defense = Defense
+		self.SFX = SFX
 		self.ActivityDrain = ActivityDrain
 	
 	def use(self, target, Character):
 		#blit_alpha(screen, HealthBar,(100,50),190)
+		pygame.mixer.Sound.play(self.SFX)
+		pygame.mixer.music.stop()
 		defense = 0
 		if target.Weapon != None:
-			damage = max(self.Strength +- target.Weapon.Defense, 0)
+			damage = self.Strength + self.Crit
 			Character.Activity -= self.ActivityDrain
-			target.HP -= damage
+			target.HP -= self.Strength
 			target.ChecknUpdate_State()
 		if Character.Activity <= self.ActivityDrain:
 			Currently_Focused_Menu = Weapon
