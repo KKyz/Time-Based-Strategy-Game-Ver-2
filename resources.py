@@ -1,4 +1,5 @@
 import pygame
+import Animation
 screen = pygame.display.set_mode((960, 540))
 
 pygame.init()
@@ -14,6 +15,10 @@ char3Idle1 = pygame.image.load("Images/Side_Char_3/Side Char 3.png").convert_alp
 char4Idle1 = pygame.image.load("Images/Side_Char_4/Side Char 4.png").convert_alpha()
 CharUnderFog = pygame.image.load("Images/Fog_Char.png").convert_alpha()
 
+#Character Animations LOAD AREA
+# ScrimitarAttackAnimation = Animation(self.animation_dir + "SwordAttack", 4)
+# NevanStrumAnimation = Animation(self.animation_dir + "Guitar Strum", 3)
+# ClawSlashAnimation = Animation(self.animation_dir + "ClawSlash", 3)
 
 CommandsList = pygame.image.load ("Images/CommandList.png").convert()
 #Other Graphics LOAD AREA

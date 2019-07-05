@@ -53,14 +53,7 @@ class Character:
 			if self.Activity >= self.Maxact:
 				self.Activity = self.Maxact
 
-	# Animation List
-	# def animation(self, Animation):
-	# 	if self.Weapon == Scrimitar and self.Phase == 4:
-	# 		self.SwordAttack = Animation(self.animation_dir + "SwordAttack", 4)
-	# 	if self.Weapon == Nevan and self.Phase == 4:
-	# 		self.GuitarStrum = Animation(self.animation_dir + "Guitar Strum", 3)
-	# 	if self.Weapon == Dual_Masamune and self.Phase == 4:
-	# 		self.ClawSlash = Animation(self.animation_dir + "ClawSlash", 3)
+
 	
 	
  

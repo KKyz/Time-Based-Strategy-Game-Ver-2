@@ -23,7 +23,8 @@ class Map:
 			Tile("Forst1", True),
 			Tile("Hous1", False),
 			Tile("Grass4", True),
-			Tile("Lake1", False)
+			Tile("Lake1", False),
+			Tile("Wall1", False)
 		]
 		self.tiles = []
 		lines = mapstr.split('\n')
@@ -42,7 +43,8 @@ class Map:
 			"Hous1":pygame.image.load("Images/Hous1.png"),
 			"Lake1":pygame.image.load("Images/Lake1.png"),
 			"Border":pygame.image.load("Images/Border.png"),
-			"Bridge1":pygame.image.load("Images/Bridge 1.png")
+			"Bridge1":pygame.image.load("Images/Bridge 1.png"),
+			"Wall1":pygame.image.load("Images/Wall1.png")
 		}
 
 	def render(self, screen):

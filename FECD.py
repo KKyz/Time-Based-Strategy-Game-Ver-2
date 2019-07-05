@@ -113,8 +113,10 @@ entities = [] # ??????????????????????????????????????????
 # (\n)144444000444441
 # (\n)100333333333001
 # (\n)111111111111111\n
-level_1 = Map("111111111111111\n100000000033331\n133330000000001\n133330000033331\n133330000033331\n133330000033331\n133334444433331\n144444000444441\n100333333333001\n111111111111111\n")
-
+level_1 = Map("155555555555551\n103030303030301\n130303030303031\n133330000033331\n133330000033331\n133330000033331\n133333030333331\n144444444444441\n100333333333001\n111111111111111\n")
+LEVEL1BGM = pygame.mixer.music.load('SFX/Level1BGMusic.wav')
+pygame.mixer.music.set_volume(0.4)
+pygame.mixer.music.play(-1)
 
 #CONTROLLER SETUP
 joysticks = [] # Opens up a new list for the number of joysticks currently connected to the computer
@@ -254,6 +256,7 @@ while not quit: # you are either a 2 year old with an IQ of 8 or a game journali
 				for c in chars:
 					c.Activity = c.StoredActivity
 			elif Currently_Selected.Phase == 4 or Currently_Selected.Phase == 2:
+				print("Knack")
 				PhaseFocus = 1
 				Currently_Selected.Phase = 3
 			else:
@@ -396,12 +399,12 @@ while not quit: # you are either a 2 year old with an IQ of 8 or a game journali
 #STAGE 4: MAKE MOVEMENT TIMER
 	if Currently_Selected != 0 and Currently_Selected.Phase == 2:
 		Currently_Selected.Activity -= 1.
-	if Currently_Selected !=0 and Currently_Selected.Activity <= 0:
+	if Currently_Selected !=0 and Currently_Selected.Activity <= 1:
 		Currently_Selected.Activity = 0
 		PhaseFocus = 1
 		Currently_Selected.Phase = 3
+		print("Knack")
 	if Currently_Selected != 0 and Currently_Selected.Phase == 3:
-		print("Weed")
 		for c in chars:
 			c.PauseActivity = c.Activity
 			c.Activity = c.PauseActivity
@@ -569,7 +572,7 @@ while not quit: # you are either a 2 year old with an IQ of 8 or a game journali
 				Currently_Selected.Weapon.Sp_Ability,
 				"Def.: " + str(Currently_Selected.Weapon.Defense)
 			] 
-			blit_alpha(screen, Currently_Focused_Menu.background_image, (0, 25), 128) # FIX
+			blit_alpha(screen, Currently_Focused_Menu.background_image, (0, 25), 128)
 			for i in range(len(texttorenderto)):
 				Weapon_Desctiptions = Menufont.render(texttorenderto[i],False,(255,255,255))
 				screen.blit(Weapon_Desctiptions,(20,40 + i*50))
@@ -605,7 +608,7 @@ while not quit: # you are either a 2 year old with an IQ of 8 or a game journali
 	# if Currently_Selected.Weapon == Dual_Masamune and Currently_Selected.Phase == 4:
 	# 	Currently_Selected.Character_Tile = Currently_Selected.ClawSlash
 		
-# STAGE 9: A delay to stop it from going too fast and flip image buffer
+# STAGE 10: A delay to stop it from going too fast and flip image buffer
 	clock.tick(60)
 	#flip the image buffer
 	pygame.display.flip()

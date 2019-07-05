@@ -98,28 +98,22 @@ class Item:
 				self.hi_potion(target)
 			elif self.name == "Angelic Robe":
 				self.angelic_robe(target)
-		# print("Oh, I'm being used!")
-		# activitygauge = 0
 
 	def potion(self, target):
-		pygame.mixer.Sound.play(PotionUseSound)
-		pygame.mixer.music.stop()
+		PotionUseSound.play()
 		target.HP += 10
 		if target.HP > target.MAXHP:
 			target.HP = target.MAXHP
-		print(self.name)
 
 	def hi_potion(self, target):
-		pygame.mixer.Sound.play(PotionUseSound)
-		pygame.mixer.music.stop()
+		pygame.mixer.Channel(0).play(pygame.mixer.Sound(PotionUseSound))
+		pygame.mixer.Channel(0).stop()
 		target.HP += 30
 		if target.HP > target.MAXHP:
 			target.HP = target.MAXHP
-		print(self.name)
 	
 	def angelic_robe(self, target):
 		target.defense += 10
-		print(self.name)
 
 
 class Weapon:
@@ -136,8 +130,7 @@ class Weapon:
 	
 	def use(self, target, Character):
 		#blit_alpha(screen, HealthBar,(100,50),190)
-		pygame.mixer.Sound.play(self.SFX)
-		pygame.mixer.music.stop()
+		self.SFX.play()
 		defense = 0
 		if target.Weapon != None:
 			damage = self.Strength + self.Crit
