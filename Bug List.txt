@@ -2,5 +2,8 @@
 2. Characters lack afterimages when they move
 3. Only the currently selected character's activity bar pauses when their phase is 3 isntead of everyone's pausing.
 5. All walls are passable while tiles like rivers shouldn't
-6. Selected Characters can go one square farther than the reticle
 7. Characters don't have animations
+8. No Interactables
+9. FECD Script Must Be Split more
+10. Weapons need amounts
+11. Character names still appear when the smoke screen is apparent

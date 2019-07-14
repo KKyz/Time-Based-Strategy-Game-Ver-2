@@ -7,7 +7,7 @@ class Animation:
 	tick = 0
 	anim = []
 		
-	def __init__(filename, frames):
+	def __init__(self, filename, frames):
 	
 		for i in range(1, frames+1):
 			self.anim.append(pygame.image.load(filename+str(i)+ ".png"))

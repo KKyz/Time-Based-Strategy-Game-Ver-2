@@ -10,7 +10,7 @@ Character
 Animation
 --NEW--
 Psuedo-Random Number List
-Keyboard-Conrols
+Keyboard-Controls
 Controller-Controls
 Weapons
 Items

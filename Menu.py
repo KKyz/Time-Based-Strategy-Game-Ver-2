@@ -13,7 +13,7 @@ class Menu:
 		self.x = 50
 		self.y = 100
 		self.above = None
-		self.background_image = pygame.image.load("Images/Action Menu.png")
+		self.background_image = pygame.image.load("Images/UI/Action Menu.png")
 		self.background_image = pygame.transform.scale(self.background_image, (200, 300))
 
 		self.wavys = []

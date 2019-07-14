@@ -1,7 +1,7 @@
 import pygame
 import random
-from resources import FountainOfYouthSprite, Selectable_Reticle, Recoverable_Reticle, HealthBar, Smoke_Reticle, Thunder_Reticle, CharUnderFog, PotionUseSound, ScrimitarClashSound
-from Character import Character
+from resources import FountainOfYouthSprite, Selectable_Reticle, Recoverable_Reticle, Smoke_Reticle, Thunder_Reticle, CharUnderFog, PotionUseSound, ScrimitarClashSound
+import Character
 from utils import blit_alpha
 
 
@@ -41,7 +41,7 @@ class AOEItem:
 		for char in chars:
 			positions = [[self.position[0] + offset[0], self.position[1] + offset[1]] for offset in self.effect_offsets]
 			if [char.x, char.y] in positions:
-				char.HP = min(char.HP - 8, char.HP)
+				char.HP = min(char.HP - 8, char.MAXHP)
 
 	def smoke_screen(self, chars):
 		charactersinrange = []
@@ -50,6 +50,7 @@ class AOEItem:
 			if [char.x, char.y] in positions:
 				charactersinrange.append(char)
 				char.Character_Tile = CharUnderFog
+				char.State = "smoked"
 
 		character_positions = [[char.x, char.y] for char in charactersinrange]
 		swapped_values = []

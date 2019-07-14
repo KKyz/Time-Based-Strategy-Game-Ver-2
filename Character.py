@@ -18,7 +18,7 @@ class Character:
 	HP = 10
 	Level = 1
 	Phase = 1
-	def __init__(self,nName,nWeapon,nCharacter_Tile,nteam,nx,ny,nHP,nActivity, animation_dir):
+	def __init__(self,nName,nWeapon,nCharacter_Tile,nteam,nx,ny,nHP,nActivity, nanimation_dir):
 		self.Name = nName
 		self.State = 0
 		self.Character_Tile = nCharacter_Tile
@@ -34,7 +34,10 @@ class Character:
 		self.StoredActivity = nActivity
 		self.Maxact = nActivity
 		self.PauseActivity = nActivity
-		self.animation_dir = animation_dir
+		self.animation_dir = nanimation_dir
+		self.State = 0xBABA
+		
+		
 
 	def ChecknUpdate_State(self):
 		if self.HP == 0:
@@ -52,7 +55,6 @@ class Character:
 				self.Activity += 100
 			if self.Activity >= self.Maxact:
 				self.Activity = self.Maxact
-
 
 	
 	

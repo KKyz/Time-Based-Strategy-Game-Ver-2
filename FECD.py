@@ -10,8 +10,6 @@ from utils import *
 from Map import *
 from Menu import *
 from InputManager import *
-from Animation import *
-from WavyText import *
 from Character import *
 
 pygame.init() # Initialising pygame so that we can use its functions
@@ -28,6 +26,8 @@ selectable_positions = [] # Makes an empty list. Later on, we can add coordinate
 selected_Weapon = None # initialises a character's current weapon. Currently set as nothing.
 GREEN = 0,255,0 # Green color definition. later used for our time gauge
 RED = 255,0,0 # Red color definition
+char = 0
+
 
 pygame.display.set_caption("The World's Most Excellent Game") # changes the name of the game at the top of the screen
 
@@ -37,6 +37,8 @@ prev_time = pygame.time.get_ticks()
 quit = False # Shows that when the game boots up, it shouldn't quit ASAP
 
 #---------------------------------------------------------------------------DRAWING AREA---------------------------------------------------------------------------------------
+
+#Game Intro
 
 # Draw Collisions
 def isPassable(x,y): #Definition for if something is able to be passed through that tile
@@ -113,9 +115,11 @@ entities = [] # ??????????????????????????????????????????
 # (\n)144444000444441
 # (\n)100333333333001
 # (\n)111111111111111\n
-level_1 = Map("155555555555551\n103030303030301\n130303030303031\n133330000033331\n133330000033331\n133330000033331\n133333030333331\n144444444444441\n100333333333001\n111111111111111\n")
+level_1 = Map("655555555555556\n508020220208005\n520202028202025\n536360000063635\n536360000063635\n536363030363635\n744444444444447\n500222222222005\n111111111111111\n111111111111111\n")
+level_2 = Map("444444444444444\n495555555555594\n460000088000064\n400000011000004\n400000011000004\n400000011000004\n400000011000004\n400000011000004\n400000011000004\n444444423444444\n")
+level_3 = Map("000000030000000\n100000040004001\n144400555050501\n111575551511161\n1111811811511141\n111411825224221\n115228222822421\n162222626225221\n152222262242221\n222222262222222\n")	
 LEVEL1BGM = pygame.mixer.music.load('SFX/Level1BGMusic.wav')
-pygame.mixer.music.set_volume(0.4)
+pygame.mixer.music.set_volume(0)
 pygame.mixer.music.play(-1)
 
 #CONTROLLER SETUP
@@ -147,7 +151,10 @@ while not quit: # you are either a 2 year old with an IQ of 8 or a game journali
 	if IDO.get_key(pygame.K_RIGHT): #If the right arrow key is pressed down...
 		if PhaseFocus == 0 or PhaseFocus == 2: #and If the current Phase is 0 or 2 
 			Reticlex +=1 # Move the reticle to the right by 1 square value
+			#Character.animation_dir = 
 		if Currently_Selected != 0 and Currently_Selected.Phase == 2: #If you're already moving something...
+			#Char_Animation()
+			#Currently_Selected.animation_dir = RunRightAnimation
 			if Currently_Selected.x != Reticlex: #And if the reticle's x position and character's x position isn't the same...
 				Currently_Selected.x = Reticlex #Make it the same
 			if Currently_Selected.x != Reticley: # And if the reticle's y position and the chatacter's y position isn't the same...
@@ -157,6 +164,8 @@ while not quit: # you are either a 2 year old with an IQ of 8 or a game journali
 		if PhaseFocus == 0 or PhaseFocus == 2:
 			Reticlex -=1
 		if Currently_Selected != 0 and Currently_Selected.Phase == 2:
+			#Char_Animation()
+			#Currently_Selected.animation_dir = RunLeftAnimation
 			if Currently_Selected.x != Reticlex:
 				Currently_Selected.x = Reticlex
 			if Currently_Selected.x != Reticley:
@@ -177,6 +186,8 @@ while not quit: # you are either a 2 year old with an IQ of 8 or a game journali
 		if PhaseFocus == 0 or PhaseFocus == 2:
 			Reticley +=1
 		if Currently_Selected != 0 and Currently_Selected.Phase == 2:
+			#Char_Animation()
+			#Currently_Selected.animation_dir = RunDownAnimation
 			if Currently_Selected.x != Reticlex:
 				Currently_Selected.x = Reticlex
 			if Currently_Selected.x != Reticley:
@@ -389,12 +400,20 @@ while not quit: # you are either a 2 year old with an IQ of 8 or a game journali
 		Currently_Selected.x = Reticlex
 	if  Reticley >= 9:
 		Reticley = 9
+		if Currently_Selected != 0:
+			Currently_Selected.y = Reticley
 	if  Reticlex >= 14:
 		Reticlex = 14
+		if Currently_Selected != 0:
+			Currently_Selected.x = Reticlex
 	if Reticlex <= 0:
 		Reticlex = 0
+		if Currently_Selected != 0:
+			Currently_Selected.x = Reticlex
 	if Reticley <= 0:
 		Reticley = 0
+		if Currently_Selected != 0:
+			Currently_Selected.y = Reticley
 
 #STAGE 4: MAKE MOVEMENT TIMER
 	if Currently_Selected != 0 and Currently_Selected.Phase == 2:
@@ -435,7 +454,7 @@ while not quit: # you are either a 2 year old with an IQ of 8 or a game journali
 # STAGE 5: DISPLAY OBJECTS
 	screen.fill((0,0,0))
 
-	level_1.render(screen)
+	level_3.render(screen)
 
 	for entity in entities:
 		entity.render(screen)
@@ -542,7 +561,7 @@ while not quit: # you are either a 2 year old with an IQ of 8 or a game journali
 
 
 # The Commands List
-	screen.blit(CommandList,(750,30))
+	blit_alpha(screen, CommandList, (750, 30), 170)
 	
 # The Minimap 
 	screen.blit(Minimap,(750,370))
@@ -552,8 +571,8 @@ while not quit: # you are either a 2 year old with an IQ of 8 or a game journali
 		if char.team == "Ally":
 			text = "               " +char.Name +"        HP:  " + str(char.HP)
 			screen.blit(char.Character_Tile, (760, 100 + i*40))
-			screen.blit(Actvivtygaugesprite, (850, 120 + i*40))
-			pygame.draw.rect(screen, GREEN, (850, 120 + i*40, char.Activity, 15))
+			screen.blit(Actvivtygaugesprite, (810, 120 + i*40))
+			pygame.draw.rect(screen, GREEN, (810, 120 + i*40, char.Activity, 15))
 			if Character.Phase == 3:
 				pygame.draw.rect(screen, RED, (850, 120 + i*40, ret.ActivityDrain, 15))
 
@@ -593,12 +612,13 @@ while not quit: # you are either a 2 year old with an IQ of 8 or a game journali
 					screen.blit(ENMWeapon_Desctiptions,(100,40 + i*50))
 
 	for char in chars:
-		if Currently_Selected != 1 and char.Phase == 1 and Reticlex == char.x and Reticley == char.y: #and AOEItem(smoke_screen.action_performed == False):
-			Characterbubblename = Menufont.render(char.Name,False,(255,255,255))
-			CharacterBubblehealth = Menufont.render(str(char.HP),False,(255,255,255))
-			screen.blit(Satus_Bubble,(char.x + 140, char.y + 55))
-			screen.blit(Characterbubblename,(char.x + 145, char.y + 70))
-			screen.blit(CharacterBubblehealth,(char.x + 230, char.y + 70))
+		if Currently_Selected != 1 and char.Phase == 1 and Reticlex == char.x and Reticley == char.y and char.State == "smoked": 
+			#while AOEItem.action_performed:
+				Characterbubblename = Menufont.render(char.Name,False,(255,255,255))
+				CharacterBubblehealth = Menufont.render(str(char.HP),False,(255,255,255))
+				screen.blit(Satus_Bubble,(char.x + 140, char.y + 55))
+				screen.blit(Characterbubblename,(char.x + 145, char.y + 70))
+				screen.blit(CharacterBubblehealth,(char.x + 230, char.y + 70))
 
 # Player Animations
 	# if Currently_Selected.Weapon == Scrimitar and Currently_Selected.Phase == 4:
@@ -608,6 +628,12 @@ while not quit: # you are either a 2 year old with an IQ of 8 or a game journali
 	# if Currently_Selected.Weapon == Dual_Masamune and Currently_Selected.Phase == 4:
 	# 	Currently_Selected.Character_Tile = Currently_Selected.ClawSlash
 		
+# Interactable Objects
+	# if Currently_Selected != 0 and Currently_Selected.Phase == 3:
+	# 	for i in range(10):
+	# 		screen.blit.Bridge1(Currently_Selected.x, reticley)
+	# 		pygame.time.wait(5)
+
 # STAGE 10: A delay to stop it from going too fast and flip image buffer
 	clock.tick(60)
 	#flip the image buffer
