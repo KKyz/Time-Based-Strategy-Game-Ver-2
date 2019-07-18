@@ -1,8 +1,1 @@
-Character.pyc
-InputManager.pyc
-Map.pyc
-Menu.pyc
-resources.pyc
-usables.pyc
-utils.pyc
-WavyText.pyc
+*.pyc
