@@ -63,7 +63,7 @@ class Map:
 		lines.pop()
 		for j, line in enumerate(lines):
 			for i in range(15):
-				self.tiles.append(Level3_Tiles[ord(line[i])-48].copy_template(i, j))
+				self.tiles.append(Level2_Tiles[ord(line[i])-48].copy_template(i, j))
 
 	def load_images(self):
 		self.images = {

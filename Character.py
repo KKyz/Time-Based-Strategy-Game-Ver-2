@@ -1,5 +1,4 @@
 import pygame
-from Animation import *
 # from FECD import Scrimitar, Nevan, Dual_Masamune
 
 class Character:
@@ -34,9 +33,11 @@ class Character:
 		self.StoredActivity = nActivity
 		self.Maxact = nActivity
 		self.PauseActivity = nActivity
+		self.Layer = 10
+		self.afterimagetimmeout = 100
 		self.animation_dir = nanimation_dir
 		self.State = 0xBABA
-		
+
 		
 
 	def ChecknUpdate_State(self):

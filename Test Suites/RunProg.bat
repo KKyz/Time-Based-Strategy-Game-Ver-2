@@ -1,1 +1,1 @@
-python mode7test.py
+python AfterImageTest.py

@@ -1,5 +1,6 @@
 import pygame
 from Animation import *
+import Character
 pygame.init()
 
 
@@ -41,17 +42,14 @@ PotionUseSound = pygame.mixer.Sound("SFX/Potion_Use.wav")
 BindingBladeClashSound = pygame.mixer.Sound("SFX/BindingBlade_Clash.wav")
 NevanStrumSound = pygame.mixer.Sound("SFX/NevanStrumSound.wav")
 
-# def Char_Animation():
-#     from FECD import char
-
-#     #Character Animations LOAD AREA
-#         #MovementAnimations
-#     RunDownAnimation = Animation(char.animation_dir + "RunDown", 3)
-#     RunLeftAnimation = Animation(char.animation_dir + "RunLeft", 3)
-#     RunRightAnimation = Animation(char.animation_dir + "RunRight", 3)
-#         #AttackAnimations
-#     ScrimitarAttackAnimation = Animation(char.animation_dir + "SwordAttack", 4)
-#     NevanStrumAnimation = Animation(char.animation_dir + "Guitar Strum", 3)
-#     ClawSlashAnimation = Animation(char.animation_dir + "ClawSlash", 3)
+# #Character Animations LOAD AREA
+# #MovementAnimations
+# RunLeftAnimation = Animation(char.animation_dir + "RunLeft", 3)
+# RunDownAnimation = Animation(char.animation_dir + "RunDown", 3)
+# RunRightAnimation = Animation(char.animation_dir + "RunRight", 3)
+# #AttackAnimations
+# ScrimitarAttackAnimation = Animation(char.animation_dir + "SwordAttack", 4)
+# ClawSlashAnimation = Animation(char.animation_dir + "ClawSlash", 3)
+# NevanStrumAnimation = Animation(char.animation_dir + "Guitar Strum", 3)
 
 

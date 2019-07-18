@@ -10,7 +10,7 @@ class Animation:
 	def __init__(self, filename, frames):
 	
 		for i in range(1, frames+1):
-			self.anim.append(pygame.image.load(filename+str(i)+ ".png"))
+			anim.append(pygame.image.load(filename+str(i)+ ".png"))
 			
 			
 	def render (screen,x ,y):
@@ -18,7 +18,7 @@ class Animation:
 	
 			tick = 0
 			index += 1
-			if index > len(self.anim) - 1:
+			if index > len(anim) - 1:
 				index = 0
 				
 		tick += 1

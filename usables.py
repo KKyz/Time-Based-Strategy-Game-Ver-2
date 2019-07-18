@@ -41,7 +41,7 @@ class AOEItem:
 		for char in chars:
 			positions = [[self.position[0] + offset[0], self.position[1] + offset[1]] for offset in self.effect_offsets]
 			if [char.x, char.y] in positions:
-				char.HP = min(char.HP - 8, char.MAXHP)
+				char.HP = min(char.HP, char.HP - 8)
 
 	def smoke_screen(self, chars):
 		charactersinrange = []
@@ -51,6 +51,10 @@ class AOEItem:
 				charactersinrange.append(char)
 				char.Character_Tile = CharUnderFog
 				char.State = "smoked"
+			if [char.x, char.y] not in positions and char.State == "smoked":
+				char.State = "Normal"
+				char.Character_Tile = char.animation_dir
+
 
 		character_positions = [[char.x, char.y] for char in charactersinrange]
 		swapped_values = []
