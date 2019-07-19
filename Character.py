@@ -36,14 +36,14 @@ class Character:
 		self.Layer = 10
 		self.afterimagetimmeout = 100
 		self.animation_dir = nanimation_dir
-		self.State = 0xBABA
+		self.State = "Normal"
 
 		
 
 	def ChecknUpdate_State(self):
-		if self.HP == 0:
-			#self.Character_Tile = Dead_Grave
-			self.State = 0xBABA
+		if self.HP <= 0:
+			self.State = "Dead"
+			
 	
 	def render(self, screen):
 		screen.blit(self.Character_Tile, (self.x * 50, 20 + self.y * 50))

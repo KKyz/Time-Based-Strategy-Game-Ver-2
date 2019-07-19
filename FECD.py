@@ -61,7 +61,7 @@ def DrawReticle(): # Definition for placing the reticle
 # Weapon Descriptions
 Scrimitar = Menu("Scrimitar","A",[Weapon("Scrimitar", 5,0.3,"",5, 15, ScrimitarClashSound, [[0, 1], [0, -1], [-1, 0], [1, 0],[1, 1],[1, -1],[-1, 1],[-1, -1]])])
 Thunder_Scroll = Menu("Thunder Scroll", "U",[AOEItem("Thunder Scroll", 3, [[0, 0]], [[-1, -3], [1, -3], [0, -2], [-1, -1], [1,-1], [0, 0], [-1, 1], [1, 1], [0, 2], [-1, 3], [1, 3]])])
-Fire_Scroll = Menu("Fire Scroll","U",[Weapon("Fire Scroll",7,0.1,"After-Effect",0, 1, [[1, 0], [2, 0], [0, 1], [0, 2], [0, -1], [0, -2]])])
+Fire_Scroll = Menu("Fire Scroll","U",[AOEItem("Fire Scroll", 3, [[0, 0]], [[1, 0], [2, 0], [0, 1], [0, 2], [0, -1], [0, -2]])])
 Dual_Masamune = Menu("Dual Masamune","N",[Weapon("Dual Masamune", 58,0.7,"",10, 1, DualMasamuneClashSound, [[1, 1], [-1, 1], [1, -1], [-1,-1]])])
 Nevan = Menu("Nevan","y",[Weapon("Nevan", 43,0.3,"",40, 1, NevanStrumSound, [[1, 0], [-1, 0], [-2, 1], [2, 1], [-2, -1], [2, -1], [0, 1], [0, -1]])])
 Binding_Blade = Menu("Binding Blade","A",[Weapon("Binding Blade", 100,0.9,"",100, 1, BindingBladeClashSound, [[-1, 0],[ 1, 0],[ 0, 1],[ 0,-1],[-2, 0],[ 2, 0],[ 0,-2],[ 0, 2],[-1, 1],[-1,-1],[ 1,-1],[ 1, 1]])])
@@ -318,11 +318,11 @@ while not quit: # you are either a 2 year old with an IQ of 8 or a game journali
 #STAGE 4: MAKE MOVEMENT TIMER
 	if Currently_Selected != 0 and Currently_Selected.Phase == 2:
 		Currently_Selected.Activity -= 1.
-	if Currently_Selected !=0 and Currently_Selected.Activity <= 1:
-		Currently_Selected.Activity = 0
+	if Currently_Selected !=0 and Currently_Selected.Activity <= 1 and Currently_Selected.Phase == 2:
+		print("Knack")
 		PhaseFocus = 1
 		Currently_Selected.Phase = 3
-		print("Knack")
+
 	if Currently_Selected != 0 and Currently_Selected.Phase == 3:
 		for c in chars:
 			c.PauseActivity = c.Activity

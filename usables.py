@@ -27,6 +27,10 @@ class AOEItem:
 	def update(self, chars):
 		if self.name == "Fountain of youth":
 			self.fountain_of_youth(chars)
+		if self.name == "Thunder Scroll":
+			self.Thunder_Scroll(chars)
+		if self.name == "Fire Scroll":
+			self.Fire_Scroll(chars)
 		elif self.name == "Smoke screen":
 			if self.action_performed is False:
 				self.smoke_screen(chars)
@@ -41,7 +45,15 @@ class AOEItem:
 		for char in chars:
 			positions = [[self.position[0] + offset[0], self.position[1] + offset[1]] for offset in self.effect_offsets]
 			if [char.x, char.y] in positions:
-				char.HP = min(char.HP, char.HP - 8)
+				char.HP = max(-1, char.HP - 8)
+
+	def Fire_Scroll(self, chars):
+		for char in chars:
+			positions = [[self.position[0] + offset[0], self.position[1] + offset[1]] for offset in self.effect_offsets]
+			if [char.x, char.y] in positions:
+				char.HP = max(-1, char.HP - 12)
+			for i in range (5):
+				positions = [[self.position[0] + offset[i]] for offset in self.effect_offsets]
 
 	def smoke_screen(self, chars):
 		charactersinrange = []
