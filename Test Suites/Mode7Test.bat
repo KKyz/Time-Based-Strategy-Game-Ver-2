@@ -1,1 +1,0 @@
-python Mode7Test.py

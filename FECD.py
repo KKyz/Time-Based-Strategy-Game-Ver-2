@@ -57,30 +57,31 @@ def DrawReticle(): # Definition for placing the reticle
 
 #def select_current_item(self): #Call this method when Z is pressed
 
-# This is a list of weapon and item descriptions. The descriptions require name, icon, menu category, damage, critical hit chance, special ability, defense, offsets, and the drain of the activity bar used by the weapon respectively
+# This is a list of weapon and item descriptions. The descriptions require name, icon, menu category, damage, critical hit chance, special ability, defense, amount, offsets, and the drain of the activity bar used by the weapon respectively
 # Weapon Descriptions
 Scrimitar = Menu("Scrimitar","A",[Weapon("Scrimitar", 5,0.3,"",5, 15, ScrimitarClashSound, [[0, 1], [0, -1], [-1, 0], [1, 0],[1, 1],[1, -1],[-1, 1],[-1, -1]])])
 Thunder_Scroll = Menu("Thunder Scroll", "U",[AOEItem("Thunder Scroll", 3, [[0, 0]], [[-1, -3], [1, -3], [0, -2], [-1, -1], [1,-1], [0, 0], [-1, 1], [1, 1], [0, 2], [-1, 3], [1, 3]])])
 Fire_Scroll = Menu("Fire Scroll","U",[AOEItem("Fire Scroll", 3, [[0, 0]], [[1, 0], [2, 0], [0, 1], [0, 2], [0, -1], [0, -2]])])
-Dual_Masamune = Menu("Dual Masamune","N",[Weapon("Dual Masamune", 58,0.7,"",10, 1, DualMasamuneClashSound, [[1, 1], [-1, 1], [1, -1], [-1,-1]])])
-Nevan = Menu("Nevan","y",[Weapon("Nevan", 43,0.3,"",40, 1, NevanStrumSound, [[1, 0], [-1, 0], [-2, 1], [2, 1], [-2, -1], [2, -1], [0, 1], [0, -1]])])
-Binding_Blade = Menu("Binding Blade","A",[Weapon("Binding Blade", 100,0.9,"",100, 1, BindingBladeClashSound, [[-1, 0],[ 1, 0],[ 0, 1],[ 0,-1],[-2, 0],[ 2, 0],[ 0,-2],[ 0, 2],[-1, 1],[-1,-1],[ 1,-1],[ 1, 1]])])
+Dual_Masamune = Menu("Basalt Gauntlets","N",[Weapon("Basalt Gauntlet", 7,0.7,"",10, 1, DualMasamuneClashSound, [[1, 1], [-1, 1], [1, -1], [-1,-1]])])
+Nevan = Menu("Revloving Barettas","y",[Weapon("Revolving Barettas", 3,0.2,"",3, 1, NevanStrumSound, [[1, 0], [-1, 0], [-2, 1], [2, 1], [-2, -1], [2, -1], [0, 1], [0, -1]])])
+Binding_Blade = Menu("Box O' Doom","A",[Weapon("Box O' Doom", 50,0.7,"",45, 1, BindingBladeClashSound, [[-1, 0],[ 1, 0],[ 0, 1],[ 0,-1],[-2, 0],[ 2, 0],[ 0,-2],[ 0, 2],[-1, 1],[-1,-1],[ 1,-1],[ 1, 1]])])
 #Item Descriptions
 potion = Menu("potion","E",[Item("Potion", 5, [[-1, 0], [ 1, 0], [ 0, 1],[ 0,-1],[-2, 0],[ 2, 0],[ 0,-2],[ 0, 2],[-1, 1],[-1,-1],[ 1,-1],[ 1, 1]])])
 Hi_potion = Menu("Hi-potion", "E",[Item("Hi-potion", 3, [[-1, 0], [ 1, 0],[ 0, 1],[ 0,-1],[-2, 0],[ 2, 0],[ 0,-2],[ 0, 2],[-1, 1],[-1,-1],[ 1,-1],[ 1, 1]])])
 Level_Up_Point = Menu ("Level Up Point", "E",[Item("Level Up Point", 2, [[-1, 0],[ 1, 0],[ 0, 1],[ 0,-1],[-2, 0],[ 2, 0],[ 0,-2],[ 0, 2],[-1, 1],[-1,-1],[ 1,-1],[ 1, 1]])])
 # Angelic_Robe = Menu("Angelic Robe","E",[Item("Angelic Robe")])
-smoke_screen = Menu("Smoke screen","i",[AOEItem("Smoke screen", 2, [[0, 0]], [[0, 0], [-1, 0],[ 1, 0],[ 0, 1],[ 0,-1],[-2, 0],[ 2, 0],[ 0,-2],[ 0, 2],[-1, 1],[-1,-1],[ 1,-1],[ 1, 1]])])
-Foutain_of_Youth = Menu("Foutain of youth","S",[AOEItem("Fountain of youth", 3, [[0, 0]], [[0, 0], [-1, 0],[ 1, 0],[ 0, 1],[ 0,-1],[-2, 0],[ 2, 0],[ 0,-2],[ 0, 2],[-1, 1],[-1,-1],[ 1,-1],[ 1, 1]])])
-Remedies = Menu("Items","E",[potion, Hi_potion, Level_Up_Point, smoke_screen, Foutain_of_Youth])
-Attack = Menu("Arsenal","A",[ Scrimitar, Thunder_Scroll, Fire_Scroll, Dual_Masamune, Binding_Blade, Nevan])
+smoke_screen = Menu("Miasma Scroll","i",[AOEItem("Smoke screen", 2, [[0, 0]], [[0, 0], [-1, 0],[ 1, 0],[ 0, 1],[ 0,-1],[-2, 0],[ 2, 0],[ 0,-2],[ 0, 2],[-1, 1],[-1,-1],[ 1,-1],[ 1, 1]])])
+Foutain_of_Youth = Menu("Regeneration Scroll","S",[AOEItem("Foutain of youth", 3, [[0, 0]], [[0, 0], [-1, 0],[ 1, 0],[ 0, 1],[ 0,-1],[-2, 0],[ 2, 0],[ 0,-2],[ 0, 2],[-1, 1],[-1,-1],[ 1,-1],[ 1, 1]])])
+Remedies = Menu("Items","E",[potion, Hi_potion, Level_Up_Point])
+Attack = Menu("Arsenal","A",[ Scrimitar, Dual_Masamune, Binding_Blade, Nevan])
+Scrolls = Menu("Mystic Scrolls", "U",[Thunder_Scroll, Fire_Scroll, smoke_screen, Foutain_of_Youth])
 End_Turn = Menu("End Turn","f",[EndTurn()])
-Actions = Menu("Actions","A",[Attack,Remedies, End_Turn])
+Actions = Menu("Actions","A",[Attack, Scrolls, Remedies, End_Turn])
 Fists = Weapon("Fists", 37,0.3,"",5)
 Currently_Focused_Menu = Actions
 Remedies.above = Actions
 Attack.above = Actions
-End_Turn.above = End_Turn
+End_Turn.above = Actions
 
 
 def get_positions_around_reticle(reticle, offsets):
@@ -324,9 +325,9 @@ while not quit: # you are either a 2 year old with an IQ of 8 or a game journali
 		Currently_Selected.Phase = 3
 
 	if Currently_Selected != 0 and Currently_Selected.Phase == 3:
-		for c in chars:
-			c.PauseActivity = c.Activity
-			c.Activity = c.PauseActivity
+		for char in chars:
+			char.PauseActivity = char.Activity
+			char.Activity = char.PauseActivity
 
 	for c in chars:
 		if c.Activity == 0:
@@ -471,8 +472,8 @@ while not quit: # you are either a 2 year old with an IQ of 8 or a game journali
 		if char.team == "Ally":
 			text = "               " +char.Name +"        HP:  " + str(char.HP)
 			screen.blit(char.Character_Tile, (760, 100 + i*40))
-			screen.blit(Actvivtygaugesprite, (810, 120 + i*40))
-			pygame.draw.rect(screen, GREEN, (810, 120 + i*40, char.Activity, 15))
+			screen.blit(Actvivtygaugesprite, (830, 120 + i*40))
+			pygame.draw.rect(screen, GREEN, (820, 120 + i*40, char.Activity, 15))
 			if Character.Phase == 3:
 				pygame.draw.rect(screen, RED, (850, 120 + i*40, ret.ActivityDrain, 15))
 
