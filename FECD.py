@@ -27,11 +27,12 @@ selected_Weapon = None # initialises a character's current weapon. Currently set
 GREEN = 0,255,0 # Green color definition. later used for our time gauge
 RED = 255,0,0 # Red color definition
 char = 0
-
+Timer = 99
 
 pygame.display.set_caption("The World's Most Excellent Game") # changes the name of the game at the top of the screen
 
-screen = pygame.display.set_mode((960,540)) # Defines screen resolution
+FullScreen = pygame.display.set_mode((1920, 1080), pygame.FULLSCREEN)
+screen = pygame.Surface((960,540)) # Defines screen resolution
 clock = pygame.time.Clock() # Defines that clock is the framerate the game will be running at (pygame.time.Clock()).
 prev_time = pygame.time.get_ticks()
 quit = False # Shows that when the game boots up, it shouldn't quit ASAP
@@ -59,12 +60,12 @@ def DrawReticle(): # Definition for placing the reticle
 
 # This is a list of weapon and item descriptions. The descriptions require name, icon, menu category, damage, critical hit chance, special ability, defense, amount, offsets, and the drain of the activity bar used by the weapon respectively
 # Weapon Descriptions
-Scrimitar = Menu("Scrimitar","A",[Weapon("Scrimitar", 5,0.3,"",5, 15, ScrimitarClashSound, [[0, 1], [0, -1], [-1, 0], [1, 0],[1, 1],[1, -1],[-1, 1],[-1, -1]])])
-Thunder_Scroll = Menu("Thunder Scroll", "U",[AOEItem("Thunder Scroll", 3, [[0, 0]], [[-1, -3], [1, -3], [0, -2], [-1, -1], [1,-1], [0, 0], [-1, 1], [1, 1], [0, 2], [-1, 3], [1, 3]])])
+Scrimitar = Menu("Scrimitar","A",[Weapon("Scrimitar", 5,0.3,"",5, 15, 5, ScrimitarClashSound, [[0, 1], [0, -1], [-1, 0], [1, 0],[1, 1],[1, -1],[-1, 1],[-1, -1]])])
+Thunder_Scroll = Menu("Thunder Scroll", "U",[AOEItem("Thunder Scroll", 6, [[0, 0]], [[-1, -3], [1, -3], [0, -2], [-1, -1], [1,-1], [-1, 1], [1, 1], [0, 2], [-1, 3], [1, 3]])])
 Fire_Scroll = Menu("Fire Scroll","U",[AOEItem("Fire Scroll", 3, [[0, 0]], [[1, 0], [2, 0], [0, 1], [0, 2], [0, -1], [0, -2]])])
-Dual_Masamune = Menu("Basalt Gauntlets","N",[Weapon("Basalt Gauntlet", 7,0.7,"",10, 1, DualMasamuneClashSound, [[1, 1], [-1, 1], [1, -1], [-1,-1]])])
-Nevan = Menu("Revloving Barettas","y",[Weapon("Revolving Barettas", 3,0.2,"",3, 1, NevanStrumSound, [[1, 0], [-1, 0], [-2, 1], [2, 1], [-2, -1], [2, -1], [0, 1], [0, -1]])])
-Binding_Blade = Menu("Box O' Doom","A",[Weapon("Box O' Doom", 50,0.7,"",45, 1, BindingBladeClashSound, [[-1, 0],[ 1, 0],[ 0, 1],[ 0,-1],[-2, 0],[ 2, 0],[ 0,-2],[ 0, 2],[-1, 1],[-1,-1],[ 1,-1],[ 1, 1]])])
+Dual_Masamune = Menu("Basalt Gauntlets","N",[Weapon("Basalt Gauntlet", 7,0.7,"",10, 1, 3, DualMasamuneClashSound, [[1, 1], [-1, 1], [1, -1], [-1,-1]])])
+Nevan = Menu("Revloving Barettas","y",[Weapon("Revolving Barettas", 3,0.2,"",3, 1, 3, NevanStrumSound, [[1, 0], [-1, 0], [-2, 1], [2, 1], [-2, -1], [2, -1], [0, 1], [0, -1]])])
+Binding_Blade = Menu("Box O' Doom","A",[Weapon("Box O' Doom", 50,0.7,"",45, 1, 3, BindingBladeClashSound, [[-1, 0],[ 1, 0],[ 0, 1],[ 0,-1],[-2, 0],[ 2, 0],[ 0,-2],[ 0, 2],[-1, 1],[-1,-1],[ 1,-1],[ 1, 1]])])
 #Item Descriptions
 potion = Menu("potion","E",[Item("Potion", 5, [[-1, 0], [ 1, 0], [ 0, 1],[ 0,-1],[-2, 0],[ 2, 0],[ 0,-2],[ 0, 2],[-1, 1],[-1,-1],[ 1,-1],[ 1, 1]])])
 Hi_potion = Menu("Hi-potion", "E",[Item("Hi-potion", 3, [[-1, 0], [ 1, 0],[ 0, 1],[ 0,-1],[-2, 0],[ 2, 0],[ 0,-2],[ 0, 2],[-1, 1],[-1,-1],[ 1,-1],[ 1, 1]])])
@@ -116,7 +117,7 @@ entities = [] # ??????????????????????????????????????????
 # (\n)144444000444441
 # (\n)100333333333001
 # (\n)111111111111111\n
-level_1 = Map("655555555555556\n508020220208005\n520202028202025\n536360000063635\n536360000063635\n536363030363635\n744444444444447\n500222222222005\n111111111111111\n111111111111111\n")
+level_1 = Map("655555555555556111\n508020220208005111\n520202028202025111\n536360000063635111\n536360000063635111\n536363030363635111\n744444444444447111\n500222222222005111\n111111111111111111\n111111111111111111\n")
 level_2 = Map("444444444444444\n495555555555594\n460000088000064\n400000011000004\n400000011000004\n400000011000004\n400000011000004\n400000011000004\n400000011000004\n444444423444444\n")
 level_3 = Map("000000030000000\n100000040004001\n144400555050501\n111575551511161\n1111811811511141\n111411825224221\n115228222822421\n162222626225221\n152222262242221\n222222262222222\n")	
 LEVEL1BGM = pygame.mixer.music.load('SFX/Level1BGMusic.wav')
@@ -135,18 +136,17 @@ while not quit: # you are either a 2 year old with an IQ of 8 or a game journali
 	if isPassable(Reticlex,Reticley) == False: # If the reticle positions aren't passable...
 		Reticlex = 5 # Put them at x-coordiante 5
 		Reticley = 5 # Put them at y-coordiante 5
+
+	pygame.transform.scale(screen, (1920, 1080), FullScreen)
 		
 # STAGE 1: CHECK IF QUIT	
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
 			quit = True
-	
 	# If anything talks about qiutting the game, quit it.
-
 # STAGE 2: CHECK IF KEYS PRESSED
 			
 	#If no character selected, currently selected = 0
-	
 	#Keys For Player Movement
 	pressed = pygame.key.get_pressed() #If something is pressed...
 	if IDO.get_key(pygame.K_RIGHT): #If the right arrow key is pressed down...
@@ -199,7 +199,7 @@ while not quit: # you are either a 2 year old with an IQ of 8 or a game journali
 		
 	if IBO.get_key(pygame.K_z):
 		for c in chars:
-			if Reticlex == c.x and Reticley == c.y and c.Phase == 1 and c.team == "Ally" and c.Phase!= 2 and Currently_Selected == 0 and c.Activity == c.Maxact:
+			if Reticlex == c.x and Reticley == c.y and c.Phase == 1 and c.team == "Ally" and c.Phase!= 2 and Currently_Selected == 0 and c.Activity == c.Maxact and c.State != "smoked":
 				Currently_Selected = c
 				Currently_Selected.StoredPositionx = Currently_Selected.x
 				Currently_Selected.StoredPositiony = Currently_Selected.y
@@ -355,7 +355,7 @@ while not quit: # you are either a 2 year old with an IQ of 8 or a game journali
 # STAGE 5: DISPLAY OBJECTS
 	screen.fill((0,0,0))
 
-	level_2.render(screen)
+	level_3.render(screen)
 
 	for entity in entities:
 		entity.render(screen)
@@ -375,12 +375,6 @@ while not quit: # you are either a 2 year old with an IQ of 8 or a game journali
 #STAGE 6: Gameplay menu and help text
 	if Currently_Focused_Menu != -1 and Currently_Selected != 0 and Currently_Selected.Phase == 3 and Currently_Focused_Menu != None:
 		Currently_Focused_Menu.blit(screen)
-		
-	CommandStatusText = Menufont.render("Commands (TAB): ",False,(0,0,0))
-	screen.blit(CommandStatusText,(50,10))
-	
-	MapStatusText = Menufont.render("Map(SHIFT): ",False,(0,0,0))
-	screen.blit(MapStatusText,(300,10))
 
 # Help Prompts
 	# General Help Prompts
@@ -460,25 +454,20 @@ while not quit: # you are either a 2 year old with an IQ of 8 or a game journali
 
 		screen.blit(HelpTextDictator,(50,520))
 
-
-# The Commands List
-	blit_alpha(screen, CommandList, (750, 30), 170)
-	
-# The Minimap 
-	screen.blit(Minimap,(750,370))
-
 	# the thing on the right
 	for i, char in enumerate(chars):
 		if char.team == "Ally":
-			text = "               " +char.Name +"        HP:  " + str(char.HP)
-			screen.blit(char.Character_Tile, (760, 100 + i*40))
-			screen.blit(Actvivtygaugesprite, (830, 120 + i*40))
-			pygame.draw.rect(screen, GREEN, (820, 120 + i*40, char.Activity, 15))
+			HUDText = char.Name +"             HP:  " + str(char.HP)
+			HUDCharacter_Tile = pygame.transform.scale(char.Character_Tile,(20,25))
+			HUDActivityGaugeBack = pygame.transform.smoothscale(Reticle,(100,10))
+			screen.blit(HUDCharacter_Tile, (30 + i*150, 0))
+			screen.blit(HUDActivityGaugeBack, (60 + i*150, 10))
+			pygame.draw.rect(screen, GREEN, (50 + i*150, 10, char.Activity, 6))
 			if Character.Phase == 3:
 				pygame.draw.rect(screen, RED, (850, 120 + i*40, ret.ActivityDrain, 15))
 
-			Character_Desctiptions = Menufont.render(text,False,(255,255,255))
-			screen.blit(Character_Desctiptions,(760,100 + i*40))
+			Character_Desctiptions = HUDfont.render(HUDText,False,(255,255,255))
+			screen.blit(Character_Desctiptions,(50 + i*150, 0))
 	
 
 #Player Weapon Descriptions:
@@ -488,6 +477,7 @@ while not quit: # you are either a 2 year old with an IQ of 8 or a game journali
 				Currently_Selected.Weapon.name,
 				"Str.:" + str(Currently_Selected.Weapon.Strength),
 				"Crit.: " + str(Currently_Selected.Weapon.Crit),
+				"# Use Left: " + str(Currently_Selected.Weapon.amount),
 				"Sp. Ability: ",
 				Currently_Selected.Weapon.Sp_Ability,
 				"Def.: " + str(Currently_Selected.Weapon.Defense)
@@ -510,7 +500,7 @@ while not quit: # you are either a 2 year old with an IQ of 8 or a game journali
 				] 
 				for i in range(len(enmtexttorenderto)):
 					ENMWeapon_Desctiptions = Menufont.render(enmtexttorenderto[i],False,(255,255,255))
-					screen.blit(ENMWeapon_Desctiptions,(100,40 + i*50))
+					screen.blit(ENMWeapon_Desctiptions,(120,40 + i*50))
 
 	for char in chars:
 		if Currently_Selected != 1 and char.Phase == 1 and Reticlex == char.x and Reticley == char.y and char.State != "smoked":
@@ -534,6 +524,10 @@ while not quit: # you are either a 2 year old with an IQ of 8 or a game journali
 	# 		screen.blit.Bridge1(Currently_Selected.x, reticley)
 	# 		pygame.time.wait(5)
 
+#Timer
+	Timer = Timer - pygame.time.wait(1//-1)
+	TimerText = Menufont.render(str(Timer),False,(0,0,0))
+	screen.blit(TimerText,(500,5))
 # STAGE 10: A delay to stop it from going too fast and flip image buffer
 	clock.tick(60)
 	#flip the image buffer

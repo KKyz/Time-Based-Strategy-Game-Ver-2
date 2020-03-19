@@ -6,6 +6,7 @@ pygame.init()
 
 screen = pygame.display.set_mode((960,540))
 Menufont = pygame.font.Font('Fonts/AMT.otf', 20)
+HUDfont = pygame.font.Font('Fonts/AMT.otf', 15)
 IconFont = pygame.font.Font('Fonts/Donjonikons.ttf', 20)
 CommandListfont = pygame.font.Font('Fonts/Ace-Attorney.ttf', 20)
 #Character Graphics LOAD AREA
@@ -18,7 +19,6 @@ CharUnderFog = pygame.image.load("Images/Characters/SpecialEffectsChar/Fog_Char.
 
 
 
-CommandsList = pygame.image.load ("Images/UI/CommandList.png").convert()
 #Other Graphics LOAD AREA
 GameplayCursor = pygame.image.load("Images/UI/cursor.png").convert_alpha()
 TitleImage = pygame.image.load("Images/TitleImage.jpg")
@@ -27,12 +27,9 @@ Recoverable_Reticle = pygame.image.load("Images/Tiles/ITEMS AND SELECTABLES/Sele
 Smoke_Reticle = pygame.image.load("Images/Tiles/ITEMS AND SELECTABLES/Smoke Box.png").convert_alpha()
 Thunder_Reticle = pygame.image.load("Images/Tiles/ITEMS AND SELECTABLES/Thunder Box.png").convert()
 Satus_Bubble = pygame.image.load("Images/UI/Staus Text.png").convert_alpha()
-CommandList = pygame.image.load("Images/UI/CommandList.png").convert_alpha()
-Minimap =  pygame.image.load("Images/UI/MiniMAP 1.png").convert()
 SaveText = pygame.image.load("Images/UI/SaveText.png").convert()
 bLaCksCrEEn = pygame.image.load("Images/BlackScreen.jpg").convert()
 FountainOfYouthSprite = pygame.image.load("Images/Tiles/ITEMS AND SELECTABLES/Fountain of youth.png").convert_alpha()
-Actvivtygaugesprite = pygame.image.load("Images/UI/Activity_Gauge.png").convert_alpha()
 
 #Sound Effects LOAD AREA
 QuitSound = pygame.mixer.Sound("SFX/QuitSound.wav")

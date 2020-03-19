@@ -66,6 +66,7 @@ class AOEItem:
 			if [char.x, char.y] not in positions and char.State == "smoked":
 				char.State = "Normal"
 				char.Character_Tile = char.animation_dir
+			
 
 
 		character_positions = [[char.x, char.y] for char in charactersinrange]
@@ -135,7 +136,7 @@ class Item:
 
 class Weapon:
 	name="default"
-	def __init__(self, name="wood", Strength=10, Crit=0.01, Sp_Ability="none", Defense = 2, ActivityDrain = 10, SFX = ScrimitarClashSound, offsets = [[-1,0], [1,0], [0,1], [0,-1]]):
+	def __init__(self, name="wood", Strength=10, Crit=0.01, Sp_Ability="none", Defense = 2, ActivityDrain = 10, Amount = 3, SFX = ScrimitarClashSound, offsets = [[-1,0], [1,0], [0,1], [0,-1]]):
 		self.name = name
 		self.Strength = Strength
 		self.Crit = Crit
@@ -144,20 +145,25 @@ class Weapon:
 		self.Defense = Defense
 		self.SFX = SFX
 		self.ActivityDrain = ActivityDrain
+		self.amount = Amount
 	
 	def use(self, target, Character):
 		#blit_alpha(screen, HealthBar,(100,50),190)
-		self.SFX.play()
-		defense = 0
-		if target.Weapon != None:
-			damage = self.Strength + self.Crit
-			Character.Activity -= self.ActivityDrain
-			target.HP -= self.Strength
-			target.ChecknUpdate_State()
-		if Character.Activity <= self.ActivityDrain:
-			Currently_Focused_Menu = Weapon
+		self.amount = self.amount - 1
+		if self.amount >= 1:
+			self.SFX.play()
+			defense = 0
+			if target.Weapon != None:
+				damage = self.Strength + self.Crit
+				Character.Activity = Character.Activity - self.ActivityDrain
+				target.HP -= self.Strength
+				target.ChecknUpdate_State()
+			if Character.Activity <= self.ActivityDrain:
+				Currently_Focused_Menu = Weapon
+		if self.amount < 0:
+			self.amount = 0
 
-		# activitygauge = 0
+			# activitygauge = 0
 
 class EndTurn:
  	def use(self, target):

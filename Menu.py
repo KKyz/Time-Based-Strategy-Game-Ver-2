@@ -53,14 +53,14 @@ class Menu:
 				Itemtext = Menufont.render(item.name, False, (255,255,255))
 				Icontext = IconFont.render(item.icon, False, (255,255,255))
 				
+				if itemid == self.CursorPoint:
+					utils.blit_alpha(screen, GameplayCursor, (self.x - 45, self.y + 50 * itemid), 200)
 				if i == self.CursorPoint:
 					self.wavys[i].update()
 					self.wavys[i].draw(screen)
 				else:
-					screen.blit(Itemtext, (self.x - 40, self.y + 50 * itemid))
+					screen.blit(Itemtext, (self.x - 10, self.y + 50 * itemid))
 				i += 1
 				screen.blit(Icontext, (self.x + 120, self.y + 50 * itemid))
-				if itemid == self.CursorPoint:
-					utils.blit_alpha(screen, GameplayCursor, (self.x - 45, self.y + 50 * itemid), 200)
 					#For Blit Alpha: 0 = Completely Invisible, 200 = Completely Visible
 	
