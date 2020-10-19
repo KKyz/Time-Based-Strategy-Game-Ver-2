@@ -17,7 +17,7 @@ class Character:
 	HP = 10
 	Level = 1
 	Phase = 1
-	def __init__(self,nName,nWeapon,nCharacter_Tile,nteam,nx,ny,nHP,nActivity, nanimation_dir):
+	def __init__(self,nName,nWeapon,nCharacter_Tile,nteam,nx,ny,nHP,nActivity, nSpeed, nanimation_dir):
 		self.Name = nName
 		self.State = 0
 		self.Character_Tile = nCharacter_Tile
@@ -37,6 +37,7 @@ class Character:
 		self.afterimagetimmeout = 100
 		self.animation_dir = nanimation_dir
 		self.State = "Normal"
+		self.speed = nSpeed
 
 		
 

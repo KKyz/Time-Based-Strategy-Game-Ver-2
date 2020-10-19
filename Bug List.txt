@@ -1,9 +1,14 @@
 1. Weapon's critical stats must come from an index that is in a list (psuedo random numbers)
 2. Characters lack afterimages when they move
-3. Only the currently selected character's activity bar pauses when their phase is 3 isntead of everyone's pausing.
 5. All walls are passable while tiles like rivers shouldn't
 7. Characters don't have animations
-8. No Interactables
+8. No Chests
 9. FECD Script Must Be Split more
-10. Weapons need amounts
-11. Character names still appear when the smoke screen is apparent
+10. Weapons need amounts displayed
+12. Game Doesn't Have A L auncher To Setup language and resolution
+13. Game world has map missing
+15. An adittional z press is needed to pass an empty menu
+16. Fire weapon doesn't function
+17. Timer functions incorrectly
+19. Game isn't in psuedo 3D
+20.  

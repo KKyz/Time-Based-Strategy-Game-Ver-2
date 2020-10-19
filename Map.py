@@ -18,6 +18,7 @@ class Map:
 	def __init__(self, mapstr):
 		self.load_images()
 		Level1_Tiles = [
+			Tile("Forst1", True), # Tile 1
 			Tile("Grass1", True), # Tile 1
 			Tile("Forst1", True), # Tile 2
 			Tile("Grass2", False), # Tile 3
@@ -62,8 +63,8 @@ class Map:
 		lines = mapstr.split('\n')
 		lines.pop()
 		for j, line in enumerate(lines):
-			for i in range(15):
-				self.tiles.append(Level3_Tiles[ord(line[i])-48].copy_template(i, j))
+			for i in range(19):
+				self.tiles.append(Level1_Tiles[ord(line[i])-48].copy_template(i, j))
 
 	def load_images(self):
 		self.images = {
@@ -74,7 +75,6 @@ class Map:
 			"Grass3":pygame.image.load("Images/Tiles/Level1/Grass3.png"),
 			"Grass4":pygame.image.load("Images/Tiles/Level1/Grass4.png"),
 			"Lake1":pygame.image.load("Images/Tiles/Level1/Lake1.png"),
-			"Border":pygame.image.load("Images/UI/Border.png"),
 			"Bridge1":pygame.image.load("Images/Tiles/Level1/Bridge 1.png"),
 			"Wall1":pygame.image.load("Images/Tiles/Level1/Wall1.png"),
 			"BrokenPillar":pygame.image.load("Images/Tiles/Level1/Broken Pillar.png"),
@@ -108,6 +108,5 @@ class Map:
 		for tile in self.tiles:
 			pygame.draw.rect(screen, (0,0,0), pygame.Rect(50 * tile.x, 20 + 50 * tile.y, 50, 50))
 			screen.blit(self.images[tile.type], (50 * tile.x, 20 + 50 * tile.y))
-		screen.blit(self.images["Border"], (0,0))
 
 	

@@ -1,13 +1,13 @@
 import pygame
 import random
-from resources import FountainOfYouthSprite, Selectable_Reticle, Recoverable_Reticle, Smoke_Reticle, Thunder_Reticle, CharUnderFog, PotionUseSound, ScrimitarClashSound
+from resources import FountainOfYouthSprite, Selectable_Reticle, Recoverable_Reticle, Haste_Reticle, Slow_Reticle, Thunder_Reticle, CharUnderFog, PotionUseSound, ScrimitarClashSound, Menu_EndTurnSFX
 import Character
 from utils import blit_alpha
 
-
+SFXVolume = 0.7
 
 class AOEItem:
-	def __init__(self, name, amount, placement_offsets, effect_offsets):
+	def __init__(self, name, amount, score, placement_offsets, effect_offsets):
 		self.offsets = placement_offsets
 		self.amount = amount
 		self.effect_offsets = effect_offsets
@@ -15,11 +15,12 @@ class AOEItem:
 		self.name = name
 		self.instance = False
 		self.action_performed = False
+		self.score = score
 
 	def use(self, position):
 		self.amount -= 1
 		if self.amount >= 1:
-			newItem = AOEItem(self.name, self.amount, self.offsets, self.effect_offsets)
+			newItem = AOEItem(self.name, self.amount, self.score, self.offsets, self.effect_offsets)
 			newItem.position = position
 			newItem.instance = True
 			return newItem
@@ -31,9 +32,11 @@ class AOEItem:
 			self.Thunder_Scroll(chars)
 		if self.name == "Fire Scroll":
 			self.Fire_Scroll(chars)
-		elif self.name == "Smoke screen":
+		if self.name == "Haste Scroll":
+			self.Haste_Scroll(chars)
+		elif self.name == "Slow Scroll":
 			if self.action_performed is False:
-				self.smoke_screen(chars)
+				self.Slow_Scroll(chars)
 	
 	def fountain_of_youth(self, chars):
 		for char in chars:
@@ -55,34 +58,27 @@ class AOEItem:
 			for i in range (5):
 				positions = [[self.position[0] + offset[i]] for offset in self.effect_offsets]
 
-	def smoke_screen(self, chars):
-		charactersinrange = []
+	def Haste_Scroll(self, chars):
+		Haste_Speed = 0
 		for char in chars:
 			positions = [[self.position[0] + offset[0], self.position[1] + offset[1]] for offset in self.effect_offsets]
 			if [char.x, char.y] in positions:
-				charactersinrange.append(char)
-				char.Character_Tile = CharUnderFog
-				char.State = "smoked"
-			if [char.x, char.y] not in positions and char.State == "smoked":
-				char.State = "Normal"
-				char.Character_Tile = char.animation_dir
-			
+				char.speed = char.speed/Haste_Speed
+				Haste_Speed += 0.0025
+				if Haste_Speed >= 2:
+					Haste_Speed = 2
+				
 
-
-		character_positions = [[char.x, char.y] for char in charactersinrange]
-		swapped_values = []
-		for i in range(len(charactersinrange)):
-			v = 0
-			while True:
-				v = random.randint(0, len(charactersinrange)-1)
-				if v not in swapped_values:
-					swapped_values.append(v)
-					break
-			charactersinrange[i].x = character_positions[v][0]
-			charactersinrange[i].y = character_positions[v][1]
-		
-		self.action_performed = True
-	
+	def Slow_Scroll(self, chars):
+		Slow_Speed = 0
+		for char in chars:
+			positions = [[self.position[0] + offset[0], self.position[1] + offset[1]] for offset in self.effect_offsets]
+			if [char.x, char.y] in positions:
+				char.speed = char.speed*Slow_Speed
+				Slow_Speed += 0.0025
+				if Slow_Speed >= 2:
+					Slow_Speed = 2
+				
 
 
 	def render(self, screen):
@@ -92,19 +88,22 @@ class AOEItem:
 		for offset in self.effect_offsets:
 			pos = [(self.position[0] + offset[0]) * 50, (self.position[1] + offset[1]) * 50 + 20]
 			if self.name == "Fountain of youth":
-				blit_alpha(screen, Recoverable_Reticle, pos, 100)
-			if self.name == "Smoke screen":
-				blit_alpha(screen, Smoke_Reticle, pos, 300)
+				blit_alpha(screen, Recoverable_Reticle, pos, 120)
 			if self.name == "Thunder Scroll":
 				blit_alpha(screen, Thunder_Reticle, pos, 120)
+			if self.name == "Haste Scroll":
+				blit_alpha(screen, Haste_Reticle, pos, 120)
+			if self.name == "Slow Scroll":
+				blit_alpha(screen, Slow_Reticle, pos, 120)
 
 			
 
 
 class Item:
-	def __init__(self, name, amount, offset):
+	def __init__(self, name, amount, score, offset):
 		self.name = name
 		self.amount = amount
+		self.score = score
 		self.offsets = offset
 
 	def use(self, target):
@@ -118,14 +117,15 @@ class Item:
 				self.angelic_robe(target)
 
 	def potion(self, target):
+		PotionUseSound.set_volume(SFXVolume)
 		PotionUseSound.play()
 		target.HP += 10
 		if target.HP > target.MAXHP:
 			target.HP = target.MAXHP
 
 	def hi_potion(self, target):
-		pygame.mixer.Channel(0).play(pygame.mixer.Sound(PotionUseSound))
-		pygame.mixer.Channel(0).stop()
+		pygame.mixer.Channel(3).set_volume(SFXVolume)
+		pygame.mixer.Channel(3).play(pygame.mixer.Sound(PotionUseSound))
 		target.HP += 30
 		if target.HP > target.MAXHP:
 			target.HP = target.MAXHP
@@ -136,8 +136,9 @@ class Item:
 
 class Weapon:
 	name="default"
-	def __init__(self, name="wood", Strength=10, Crit=0.01, Sp_Ability="none", Defense = 2, ActivityDrain = 10, Amount = 3, SFX = ScrimitarClashSound, offsets = [[-1,0], [1,0], [0,1], [0,-1]]):
+	def __init__(self, name="wood", score=0, Strength=10, Crit=0.01, Sp_Ability="none", Defense = 2, ActivityDrain = 10, Amount = 3, SFX = ScrimitarClashSound, offsets = [[-1,0], [1,0], [0,1], [0,-1]]):
 		self.name = name
+		self.score = score
 		self.Strength = Strength
 		self.Crit = Crit
 		self.Sp_Ability = Sp_Ability
@@ -151,11 +152,12 @@ class Weapon:
 		#blit_alpha(screen, HealthBar,(100,50),190)
 		self.amount = self.amount - 1
 		if self.amount >= 1:
-			self.SFX.play()
+			pygame.mixer.Channel(2).set_volume(SFXVolume)
+			pygame.mixer.Channel(2).play(pygame.mixer.Sound(self.SFX))
 			defense = 0
 			if target.Weapon != None:
 				damage = self.Strength + self.Crit
-				Character.Activity = Character.Activity - self.ActivityDrain
+				Character.Activity -= self.ActivityDrain
 				target.HP -= self.Strength
 				target.ChecknUpdate_State()
 			if Character.Activity <= self.ActivityDrain:
@@ -166,8 +168,10 @@ class Weapon:
 			# activitygauge = 0
 
 class EndTurn:
- 	def use(self, target):
- 		target.Phase = 1
- 		target.StoredPositionx = target.x 
- 		target.StoredPositiony = target.y
+	def use(self, target):
+		 pygame.mixer.Channel(1).set_volume(SFXVolume)
+		 pygame.mixer.Channel(1).play(pygame.mixer.Sound(Menu_EndTurnSFX))
+		 target.Phase = 1
+		 target.StoredPositionx = target.x 
+		 target.StoredPositiony = target.y
 		

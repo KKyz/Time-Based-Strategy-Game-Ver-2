@@ -12,3 +12,16 @@ def get_offset_of_all_units(chararacters, current_character):
 	for char in chararacters:
 		offsets.append([char.x - current_character.x, char.y - current_character.y])
 	return offsets
+
+def Pause(pause, PhaseFocus, PauseScreen, screen, isPaused):
+	pause = isPaused
+	while pause:
+		PhaseFocus = 1
+		screen.blit(PauseScreen, (100, 100))
+		print("paused")
+
+	while not pause:
+		PhaseFocus = 0
+		print("unpaused")
+
+	pygame.display.update()

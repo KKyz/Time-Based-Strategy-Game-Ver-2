@@ -1,0 +1,2 @@
+python WorldMap.py
+Pause

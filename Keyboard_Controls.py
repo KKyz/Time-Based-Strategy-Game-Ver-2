@@ -1,13 +1,13 @@
 import pygame
-#If no character selected, currently selected = 0
-	
-#Keys For Player Movement
+from utils
 pressed = pygame.key.get_pressed() #If something is pressed...
 if IDO.get_key(pygame.K_RIGHT): #If the right arrow key is pressed down...
 	if PhaseFocus == 0 or PhaseFocus == 2: #and If the current Phase is 0 or 2 
 		Reticlex +=1 # Move the reticle to the right by 1 square value
 		#Character.animation_dir = 
 	if Currently_Selected != 0 and Currently_Selected.Phase == 2: #If you're already moving something...
+		#Char_Animation()
+		#Currently_Selected.animation_dir = RunRightAnimation
 		if Currently_Selected.x != Reticlex: #And if the reticle's x position and character's x position isn't the same...
 			Currently_Selected.x = Reticlex #Make it the same
 		if Currently_Selected.x != Reticley: # And if the reticle's y position and the chatacter's y position isn't the same...
@@ -17,6 +17,8 @@ if IDO.get_key(pygame.K_LEFT): # if the left key is pressed...
 	if PhaseFocus == 0 or PhaseFocus == 2:
 		Reticlex -=1
 	if Currently_Selected != 0 and Currently_Selected.Phase == 2:
+		#Char_Animation()
+		#Currently_Selected.animation_dir = RunLeftAnimation
 		if Currently_Selected.x != Reticlex:
 			Currently_Selected.x = Reticlex
 		if Currently_Selected.x != Reticley:
@@ -37,6 +39,8 @@ if IDO.get_key(pygame.K_DOWN):
 	if PhaseFocus == 0 or PhaseFocus == 2:
 		Reticley +=1
 	if Currently_Selected != 0 and Currently_Selected.Phase == 2:
+		#Char_Animation()
+		#Currently_Selected.animation_dir = RunDownAnimation
 		if Currently_Selected.x != Reticlex:
 			Currently_Selected.x = Reticlex
 		if Currently_Selected.x != Reticley:
@@ -47,7 +51,7 @@ if IDO.get_key(pygame.K_DOWN):
 	
 if IBO.get_key(pygame.K_z):
 	for c in chars:
-		if Reticlex == c.x and Reticley == c.y and c.Phase == 1 and c.team == "Ally" and c.Phase!= 2 and Currently_Selected == 0 and c.Activity == c.Maxact:
+		if Reticlex == c.x and Reticley == c.y and c.Phase == 1 and c.team == "Ally" and Currently_Selected == 0 and c.Activity == c.Maxact:
 			Currently_Selected = c
 			Currently_Selected.StoredPositionx = Currently_Selected.x
 			Currently_Selected.StoredPositiony = Currently_Selected.y
@@ -93,7 +97,8 @@ if IBO.get_key(pygame.K_z):
 					for char in chars:
 						if char.x == Reticlex and char.y == Reticley:
 							if isinstance(ret, Weapon) and char.team == "Enemy":
-								selected_usable.use(char, Currently_Selected)
+								if selected_usable.ActivityDrain <= Currently_Selected.Activity: 
+									selected_usable.use(char, Currently_Selected)
 							if isinstance(ret, Item) and char.team == "Ally":
 								selected_usable.use(char)
 							Currently_Focused_Menu = Actions
@@ -116,7 +121,6 @@ if IBO.get_key(pygame.K_x) and not IBO.get_key(pygame.K_z):
 			for c in chars:
 				c.Activity = c.StoredActivity
 		elif Currently_Selected.Phase == 4 or Currently_Selected.Phase == 2:
-			print("Knack")
 			PhaseFocus = 1
 			Currently_Selected.Phase = 3
 		else:
@@ -128,8 +132,9 @@ if IBO.get_key(pygame.K_x) and not IBO.get_key(pygame.K_z):
 		if Currently_Focused_Menu == None:
 			Currently_Focused_Menu = Actions
 
-if pressed[pygame.K_ESCAPE]:
+if  IBO.get_key(pygame.K_ESCAPE):
 	pygame.mixer.Sound.play(QuitSound)
+	pygame.mixer.Sound.set_volume(Volume)
 	pygame.mixer.music.stop()
 	screen.blit(SaveText, (200,200))
 	pygame.display.flip()
@@ -139,3 +144,9 @@ if pressed[pygame.K_ESCAPE]:
 		pygame.display.flip()
 		pygame.time.wait(20)
 	exit()
+
+if IBO.get_key(pygame.K_a):
+	Pause(Paused, PhaseFocus, Pause_Screen, screen, True)
+
+if IBO.get_key(pygame.K_s):
+	Pause(Paused, PhaseFocus, Pause_Screen, screen, False)
