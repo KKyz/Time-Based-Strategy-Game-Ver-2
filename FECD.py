@@ -31,7 +31,7 @@ Timer = 99
 
 pygame.display.set_caption("The World's Most Excellent Game") # changes the name of the game at the top of the screen
 
-FullScreen = pygame.display.set_mode((1920, 1080), pygame.FULLSCREEN)
+FullScreen = pygame.display.set_mode((1920, 1080))
 screen = pygame.Surface((960,540)) # Defines screen resolution
 clock = pygame.time.Clock() # Defines that clock is the framerate the game will be running at (pygame.time.Clock()).
 prev_time = pygame.time.get_ticks()
@@ -288,7 +288,6 @@ while not quit: # you are either a 2 year old with an IQ of 8 or a game journali
 		pygame.time.wait(420)
 		for i in range(10, 210, 10):
 			blit_alpha(screen, bLaCksCrEEn, (0,0), i)
-			pygame.display.flip()
 			pygame.time.wait(20)
 		exit()
 		
