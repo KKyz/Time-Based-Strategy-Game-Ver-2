@@ -10,12 +10,12 @@ from InputManager import *
 from Character import *
 from ActionsMenu import *
 from Collision_Detection import *
-# try:
+#try:
 #	from Configuration import BGVolume, BattleSpeed, Resolution
-# except:
-BGVolume = 0.1
+#except:
+BGVolume = 0
 BattleSpeed = 1
-Resolution = (1920, 1080)
+Resolution = (960,540)
 
 pygame.init() # Initialinng pygame so that we can use its functions
 pygame.font.init() # initialising pygame fonts so that we can use fonts in pygame
@@ -38,7 +38,7 @@ GRAY = 105,105,105
 
 #Config
 Timer = 99 # Timer
-isFullscreen = pygame.FULLSCREEN
+isFullscreen = 0 #pygame.FULLSCREEN
 Sound_Output = 2
 pygame.display.set_caption("The World's Most Excellent Game") # changes the name of the game at the top of the screen
 
@@ -353,92 +353,6 @@ while not quit:
 		#pygame.mixer.Channel(1).set_volume(SFXVolume)
 		#pygame.mixer.Channel(1).play(pygame.mixer.Sound(Menu_InitSFX), 1)
 		Currently_Focused_Menu.blit(screen)
-
-# Help Prompts
-	# General Help Prompts
-	HelpGoalText = Menufont.render("Defeat All Of The Enemies",False,(0,0,0))
-	HelpItemsText = Menufont.render("Use An Item",False,(0,0,0))
-	HelpAttackText = Menufont.render("Choose A Weapon To Attack A Nerby Foe",False,(0,0,0))
-	HelpEnd_TurnText = Menufont.render("End The Actions Of The Current Character",False,(0,0,0))
-	# Weapon Help Prompts
-	HelpScrimitarText = Menufont.render("A Curved Weapon With Low Defense, But A Higher Critical Chance",False,(0,0,0))
-	HelpBinding_BladeText = Menufont.render("The Ultimate Weapon, Unprecedented Attack And Defense Lies Within... ",False,(0,0,0))
-	HelpScrimitarText = Menufont.render("A Curved Weapon With Low Defense, But A Higher Critical Chance",False,(0,0,0))
-	HelpThunder_ScrollText = Menufont.render("An Overworld Attack That Stikes Down Lightning Periodically. Causes a stun effect.",False,(0,0,0))
-	HelpFire_ScrollText = Menufont.render("An Overworld Attack That Spreads Around Until It Dies. Causes The Victims To Burn.",False,(0,0,0))
-	HelpHaste_ScrollText = Menufont.render("An Overworld Item That Doubles The Refill Speed Of All Characters",False,(0,0,0))
-	HelpSlow_ScrollText = Menufont.render("An Overworld Attack That Spreads Around Until It Dies. Causes The Victims To Burn.",False,(0,0,0))
-	HelpBasalt_GauntletText = Menufont.render("An Extremenly Delicate Blade That Cuts Through Enemies Like Butter, But Has A Very Short Range.",False,(0,0,0))
-	HelpNevanText = Menufont.render("An Electro Guitar That Can Send Lighting Shivers Down Enemy Spines.Has To Be Used Repeatedly To Do More Damage.",False,(0,0,0))
-	# Item Help Prompts
-	HelpPotionText = Menufont.render("Grants 10 HP to the selected character " +Character.Name+ " (" + str(Character.HP) + ") -> (" + str(Character.HP + 10) + ")",False,(0,0,0))
-	HelpHi_PotionText = Menufont.render("Grants 30 HP to the selected character " +Character.Name+ " (" + str(Character.HP) + ") -> (" + str(Character.HP + 30) + ")",False,(0,0,0))
-	HelpTextDictator =  HelpGoalText
-
-	for c in chars:
-		if PhaseFocus == 0 and c.Phase == 1 and c.Phase != 4:
-			c.Activity += BattleSpeed * c.speed
-			if c.Activity > c.Maxact:
-				c.Activity = c.Maxact
-			if c.Activity < 0:
-				c.Activity = 0
-
-	if Currently_Focused_Menu != None and isinstance(Currently_Focused_Menu, Menu) and Currently_Focused_Menu.items != None:
-		Damien = Currently_Focused_Menu.items[Currently_Focused_Menu.CursorPoint]
-		if Currently_Selected != 0 and Currently_Selected.Phase == 1:
-			HelpTextDictator = HelpGoalText
-			
-
-
-		#Descriptions For Remedies:
-		if Currently_Selected != 0 and Currently_Selected.Phase == 3 and Damien == Remedies:
-			HelpTextDictator = HelpItemsText
-
-		#Descriptions For Attack:
-		if Currently_Selected != 0 and Currently_Selected.Phase == 3 and Damien == Attack:
-			HelpTextDictator = HelpAttackText
-
-		#Descriptions For End Turn:
-		if Currently_Selected != 0 and Currently_Selected.Phase == 3 and Damien == End_Turn:
-			HelpTextDictator = HelpEnd_TurnText
-
-		# Descriptions For Scrimitar:
-		if Currently_Selected != 0 and Currently_Selected.Phase == 3 and Damien == Scrimitar:
-			HelpTextDictator = HelpScrimitarText
-
-		#Descriptions For Thunder Scroll:
-		if Currently_Selected != 0 and Currently_Selected.Phase == 3 and Damien == Thunder_Scroll:
-			HelpTextDictator = HelpThunder_ScrollText
-
-
-		#Descriptions For Binding Blade:	
-		if Currently_Selected != 0 and Currently_Selected.Phase == 3 and Damien == Binding_Blade:
-			HelpTextDictator = HelpBinding_BladeText
-
-		#Descriptions For Fire Scroll:
-		if Currently_Selected != 0 and Currently_Selected.Phase == 3 and Damien == Fire_Scroll:
-			HelpTextDictator = HelpFire_ScrollText
-
-		if Currently_Selected != 0 and Currently_Selected.Phase == 3 and Damien == Haste_Scroll:
-			HelpTextDictator = HelpHaste_ScrollText
-		
-
-		if Currently_Selected != 0 and Currently_Selected.Phase == 3 and Damien == Basalt_Gauntlets:
-			HelpTextDictator = HelpBasalt_GauntletText
-
-		#Descriptions For Nevan:
-		if Currently_Selected != 0 and Currently_Selected.Phase == 3 and Damien == Nevan:
-			HelpTextDictator = HelpNevanText
-
-		#Descriptions For Potion:
-		if Currently_Selected != 0 and Currently_Selected.Phase == 3 and Damien == potion:
-			HelpTextDictator = HelpPotionText
-
-		#Descriptions For Hi-Potion:
-		if Currently_Selected != 0 and Currently_Selected.Phase == 3 and Damien == Hi_potion:
-			HelpTextDictator = HelpHi_PotionText
-
-		screen.blit(HelpTextDictator,(50,520))
 
 	# the thing at the top
 	screen.blit(Border,(0,0))
