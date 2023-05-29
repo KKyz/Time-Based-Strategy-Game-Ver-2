@@ -1,0 +1,2 @@
+python fecd.py
+pause
